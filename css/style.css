@@ -684,6 +684,38 @@ footer {
     color: var(--color-cyan);
 }
 
+/* ===== 用戶管理分組 ===== */
+.user-group { margin-bottom: 12px; }
+.user-group-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    list-style: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    user-select: none;
+}
+.user-group-summary::-webkit-details-marker { display: none; }
+.user-group-summary::before {
+    content: '▶';
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+    color: var(--text-muted);
+}
+details[open] .user-group-summary::before { transform: rotate(90deg); }
+.user-count {
+    background: rgba(0,212,255,0.12);
+    color: var(--color-cyan);
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
 /* ===== RWD ===== */
 @media (max-width: 900px) {
     .hero-content { flex-direction: column; text-align: center; }

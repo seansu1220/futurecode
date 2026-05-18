@@ -11,6 +11,11 @@ const FIREBASE_CONFIG = {
 // 擁有者 UID（固定，不可透過介面更改）
 const OWNER_UID = 'QSGTkyJ1PjMk0kF6RiIbxFHfQVT2';
 
+// ===== EmailJS 設定（填入後自動啟用歡迎信）=====
+const EMAILJS_PUBLIC_KEY  = '';  // emailjs.com → Account → Public Key
+const EMAILJS_SERVICE_ID  = '';  // emailjs.com → Email Services → Service ID
+const EMAILJS_TEMPLATE_ID = '';  // emailjs.com → Email Templates → Template ID
+
 // ===== 初始資料（首次建立資料庫時使用）=====
 const SEED_TOOLS = [
     { icon: '📝', name: '字數計算器', desc: '快速計算文字的字數、字元數與段落數，寫作必備！', url: '' },
@@ -191,6 +196,7 @@ async function registerUser() {
             username, email, role: 'user',
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         });
+        sendWelcomeEmail(username, email); // 背景發送，不阻塞流程
         closeModal('registerModal');
     } catch (e) {
         if (e.code === 'auth/email-already-in-use') showAuthError(errorEl, '此信箱已被註冊');
@@ -293,36 +299,63 @@ function updateAuthUI() {
 }
 
 // ===== 用戶管理 =====
+function renderUserRow(u) {
+    const isDisabled = !!u.disabled;
+    const isMe = u.id === OWNER_UID;
+    return `
+    <tr ${isDisabled ? 'style="opacity:0.45;"' : ''}>
+        <td>${escHtml(u.username || '-')}</td>
+        <td>${escHtml(u.email || '-')}</td>
+        <td>
+            <select class="role-select" data-uid="${escHtml(u.id)}" ${isMe || isDisabled ? 'disabled' : ''}>
+                <option value="user"  ${u.role === 'user'  ? 'selected' : ''}>一般用戶</option>
+                <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>管理員</option>
+                ${isMe ? '<option value="owner" selected>擁有者</option>' : ''}
+            </select>
+        </td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap;">
+            ${isMe ? '<span class="owner-tag">不可修改</span>' : `
+                ${!isDisabled ? `<button class="btn-admin" onclick="saveUserRole('${escHtml(u.id)}')" style="padding:4px 10px;font-size:0.75rem;">儲存</button>` : ''}
+                <button class="btn-danger" onclick="${isDisabled ? `restoreUser('${escHtml(u.id)}')` : `disableUser('${escHtml(u.id)}')`}"
+                    style="padding:4px 10px;font-size:0.75rem;">
+                    ${isDisabled ? '恢復' : '停用'}
+                </button>
+            `}
+        </td>
+    </tr>`;
+}
+
 async function openUserMgmt() {
     if (!isOwner()) return;
     const snap = await db.collection('users').orderBy('createdAt', 'asc').get();
     const users = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    document.getElementById('userMgmtList').innerHTML = users.map(u => {
-        const isDisabled = !!u.disabled;
-        const isMe = u.id === OWNER_UID;
-        return `
-        <tr ${isDisabled ? 'style="opacity:0.45;"' : ''}>
-            <td>${escHtml(u.username || '-')}${isDisabled ? ' <span style="color:#f87171;font-size:0.75rem;">（停用）</span>' : ''}</td>
-            <td>${escHtml(u.email || '-')}</td>
-            <td>
-                <select class="role-select" data-uid="${escHtml(u.id)}" ${isMe || isDisabled ? 'disabled' : ''}>
-                    <option value="user"  ${u.role === 'user'  ? 'selected' : ''}>一般用戶</option>
-                    <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>管理員</option>
-                    ${isMe ? '<option value="owner" selected>擁有者</option>' : ''}
-                </select>
-            </td>
-            <td style="display:flex;gap:6px;flex-wrap:wrap;">
-                ${isMe ? '<span class="owner-tag">不可修改</span>' : `
-                    ${!isDisabled ? `<button class="btn-admin" onclick="saveUserRole('${escHtml(u.id)}')" style="padding:4px 10px;font-size:0.75rem;">儲存</button>` : ''}
-                    <button class="btn-danger" onclick="${isDisabled ? `restoreUser('${escHtml(u.id)}')` : `disableUser('${escHtml(u.id)}')`}"
-                        style="padding:4px 10px;font-size:0.75rem;">
-                        ${isDisabled ? '恢復' : '停用'}
-                    </button>
-                `}
-            </td>
-        </tr>`;
-    }).join('');
+    const groups = [
+        { label: '👑 擁有者',  items: [], open: true  },
+        { label: '🔑 管理員',  items: [], open: true  },
+        { label: '👤 一般用戶', items: [], open: true  },
+        { label: '🚫 已停用',  items: [], open: false },
+    ];
+    users.forEach(u => {
+        if (u.disabled)          groups[3].items.push(u);
+        else if (u.id === OWNER_UID || u.role === 'owner') groups[0].items.push(u);
+        else if (u.role === 'admin') groups[1].items.push(u);
+        else                         groups[2].items.push(u);
+    });
+
+    document.getElementById('userMgmtList').innerHTML = groups
+        .filter(g => g.items.length > 0)
+        .map(g => `
+            <details ${g.open ? 'open' : ''} class="user-group">
+                <summary class="user-group-summary">
+                    ${g.label}<span class="user-count">${g.items.length}</span>
+                </summary>
+                <table class="user-table">
+                    <thead><tr><th>帳號</th><th>信箱</th><th>角色</th><th>操作</th></tr></thead>
+                    <tbody>${g.items.map(renderUserRow).join('')}</tbody>
+                </table>
+            </details>
+        `).join('');
 
     openModal('userMgmtModal');
 }
@@ -360,8 +393,24 @@ async function restoreUser(uid) {
     }
 }
 
+// ===== 發送歡迎信 =====
+async function sendWelcomeEmail(username, toEmail) {
+    if (!window.emailjs || !EMAILJS_PUBLIC_KEY) return;
+    try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            to_name:  username,
+            to_email: toEmail,
+        });
+    } catch (e) {
+        console.warn('歡迎信發送失敗：', e);
+    }
+}
+
 // ===== 初始化 =====
 document.addEventListener('DOMContentLoaded', () => {
+    if (window.emailjs && EMAILJS_PUBLIC_KEY) {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
     bindEvents();
     // 資料載入由 onAuthStateChanged 觸發，不在此重複呼叫
 });
