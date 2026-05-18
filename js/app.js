@@ -12,9 +12,9 @@ const FIREBASE_CONFIG = {
 const OWNER_UID = 'QSGTkyJ1PjMk0kF6RiIbxFHfQVT2';
 
 // ===== EmailJS 設定（填入後自動啟用歡迎信）=====
-const EMAILJS_PUBLIC_KEY  = '';  // emailjs.com → Account → Public Key
-const EMAILJS_SERVICE_ID  = '';  // emailjs.com → Email Services → Service ID
-const EMAILJS_TEMPLATE_ID = '';  // emailjs.com → Email Templates → Template ID
+const EMAILJS_PUBLIC_KEY  = 'Xk0QIPsAgB5SDVz-Y';
+const EMAILJS_SERVICE_ID  = 'service_ggjqvjm';
+const EMAILJS_TEMPLATE_ID = 'template_bvgfxkh';
 
 // ===== 初始資料（首次建立資料庫時使用）=====
 const SEED_TOOLS = [
