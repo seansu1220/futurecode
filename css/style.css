@@ -315,6 +315,18 @@ section { padding: 96px 24px; }
     padding: 60px 20px;
     font-size: 1rem;
 }
+.loading-msg {
+    color: var(--text-muted);
+    padding: 40px 0;
+    font-size: 0.95rem;
+    grid-column: 1 / -1;
+}
+.error-msg-inline {
+    color: #f87171;
+    padding: 40px 0;
+    font-size: 0.95rem;
+    grid-column: 1 / -1;
+}
 
 /* ===== 工具卡 ===== */
 .tools-grid {
