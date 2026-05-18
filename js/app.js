@@ -41,6 +41,15 @@ const canAdd   = () => ['owner', 'admin'].includes(currentRole);
 const canEdit  = () => currentRole === 'owner';
 const canDelete = () => currentRole === 'owner';
 
+// ===== 密碼強度驗證 =====
+function isStrongPassword(pw) {
+    return pw.length >= 8 &&
+           /[A-Z]/.test(pw) &&
+           /[a-z]/.test(pw) &&
+           /[0-9]/.test(pw) &&
+           /[^A-Za-z0-9]/.test(pw);
+}
+
 // ===== 驗證碼 =====
 function refreshCaptcha(displayId, inputId) {
     const a = Math.floor(Math.random() * 9) + 1;
@@ -156,7 +165,10 @@ async function registerUser() {
 
     if (!username || !email || !password || !confirm) { showAuthError(errorEl, '請填寫所有欄位'); return; }
     if (password !== confirm) { showAuthError(errorEl, '兩次輸入的密碼不一致'); return; }
-    if (password.length < 6)  { showAuthError(errorEl, '密碼至少需要 6 個字元'); return; }
+    if (!isStrongPassword(password)) {
+        showAuthError(errorEl, '密碼需至少 8 碼，並包含大寫字母、小寫字母、數字及特殊符號（如 @#$!）');
+        return;
+    }
     if (!checkCaptcha('regCaptchaInput')) {
         showAuthError(errorEl, '驗證碼錯誤，請再試一次');
         refreshCaptcha('regCaptchaText', 'regCaptchaInput');
@@ -186,6 +198,50 @@ function showAuthError(el, msg) {
     el.classList.remove('hidden');
 }
 
+// ===== 帳號設定 =====
+async function openAccountSettings() {
+    if (!currentUser) return;
+    await currentUser.reload();
+    const providers = currentUser.providerData.map(p => p.providerId);
+    const hasGoogle   = providers.includes('google.com');
+    const hasPassword = providers.includes('password');
+
+    const methodList = [
+        hasPassword ? '📧 信箱／密碼' : null,
+        hasGoogle   ? '🔵 Google'     : null,
+    ].filter(Boolean).join('、');
+
+    document.getElementById('providerList').innerHTML =
+        `<p style="color:var(--text-secondary);font-size:0.9rem;">已連結：<strong style="color:var(--text-primary);">${methodList}</strong></p>`;
+
+    document.getElementById('linkGoogleArea').classList.toggle('hidden', hasGoogle);
+    document.getElementById('alreadyLinked').classList.toggle('hidden', !hasGoogle);
+    document.getElementById('accountMsg').classList.add('hidden');
+
+    openModal('accountModal');
+}
+
+async function linkWithGoogle() {
+    const msgEl = document.getElementById('accountMsg');
+    try {
+        await currentUser.linkWithPopup(googleProvider);
+        msgEl.style.color = 'var(--color-cyan)';
+        msgEl.textContent = '✅ Google 帳號連結成功！';
+        msgEl.classList.remove('hidden');
+        await openAccountSettings();
+    } catch (e) {
+        msgEl.style.color = '#f87171';
+        if (e.code === 'auth/credential-already-in-use') {
+            msgEl.textContent = '此 Google 帳號已被其他帳號使用';
+        } else if (e.code === 'auth/popup-closed-by-user') {
+            msgEl.textContent = '視窗被關閉，請再試一次';
+        } else {
+            msgEl.textContent = '連結失敗，請稍後再試';
+        }
+        msgEl.classList.remove('hidden');
+    }
+}
+
 // ===== Modal 切換 =====
 function switchToRegister() {
     closeModal('loginModal');
@@ -210,6 +266,7 @@ function updateAuthUI() {
     const adminToolBar      = document.getElementById('adminToolBar');
     const adminPortfolioBar = document.getElementById('adminPortfolioBar');
     const userMgmtBtn       = document.getElementById('userMgmtBtn');
+    const accountSettingsBtn = document.getElementById('accountSettingsBtn');
 
     if (currentUser) {
         loginBtn.textContent = '登出';
@@ -226,6 +283,7 @@ function updateAuthUI() {
     adminToolBar.classList.toggle('hidden', !canAdd());
     adminPortfolioBar.classList.toggle('hidden', !canAdd());
     if (userMgmtBtn) userMgmtBtn.classList.toggle('hidden', !isOwner());
+    if (accountSettingsBtn) accountSettingsBtn.classList.toggle('hidden', !currentUser);
 }
 
 // ===== 用戶管理 =====
@@ -534,6 +592,9 @@ function bindEvents() {
 
     // 用戶管理
     document.getElementById('userMgmtBtn').addEventListener('click', openUserMgmt);
+
+    // 帳號設定
+    document.getElementById('accountSettingsBtn').addEventListener('click', openAccountSettings);
 
     // 登入 Modal
     document.getElementById('loginSubmit').addEventListener('click', loginWithEmail);
