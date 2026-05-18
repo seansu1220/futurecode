@@ -94,7 +94,13 @@ async function resolveRole(user) {
     }
 
     if (snap.exists) {
-        currentRole = snap.data().role || 'user';
+        const data = snap.data();
+        if (data.disabled) {
+            await auth.signOut();
+            alert('此帳號已被停用，請聯繫管理員。');
+            return;
+        }
+        currentRole = data.role || 'user';
     } else {
         // 第一次 Google 登入，自動建立用戶文件
         currentRole = 'user';
@@ -292,23 +298,31 @@ async function openUserMgmt() {
     const snap = await db.collection('users').orderBy('createdAt', 'asc').get();
     const users = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    document.getElementById('userMgmtList').innerHTML = users.map(u => `
-        <tr>
-            <td>${escHtml(u.username || '-')}</td>
+    document.getElementById('userMgmtList').innerHTML = users.map(u => {
+        const isDisabled = !!u.disabled;
+        const isMe = u.id === OWNER_UID;
+        return `
+        <tr ${isDisabled ? 'style="opacity:0.45;"' : ''}>
+            <td>${escHtml(u.username || '-')}${isDisabled ? ' <span style="color:#f87171;font-size:0.75rem;">（停用）</span>' : ''}</td>
             <td>${escHtml(u.email || '-')}</td>
             <td>
-                <select class="role-select" data-uid="${escHtml(u.id)}" ${u.id === OWNER_UID ? 'disabled' : ''}>
+                <select class="role-select" data-uid="${escHtml(u.id)}" ${isMe || isDisabled ? 'disabled' : ''}>
                     <option value="user"  ${u.role === 'user'  ? 'selected' : ''}>一般用戶</option>
                     <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>管理員</option>
-                    ${u.id === OWNER_UID ? '<option value="owner" selected>擁有者</option>' : ''}
+                    ${isMe ? '<option value="owner" selected>擁有者</option>' : ''}
                 </select>
             </td>
-            <td>${u.id === OWNER_UID
-                ? '<span class="owner-tag">不可修改</span>'
-                : `<button class="btn-admin" onclick="saveUserRole('${escHtml(u.id)}')" style="padding:4px 10px;font-size:0.75rem;">儲存</button>`
-            }</td>
-        </tr>
-    `).join('');
+            <td style="display:flex;gap:6px;flex-wrap:wrap;">
+                ${isMe ? '<span class="owner-tag">不可修改</span>' : `
+                    ${!isDisabled ? `<button class="btn-admin" onclick="saveUserRole('${escHtml(u.id)}')" style="padding:4px 10px;font-size:0.75rem;">儲存</button>` : ''}
+                    <button class="btn-danger" onclick="${isDisabled ? `restoreUser('${escHtml(u.id)}')` : `disableUser('${escHtml(u.id)}')`}"
+                        style="padding:4px 10px;font-size:0.75rem;">
+                        ${isDisabled ? '恢復' : '停用'}
+                    </button>
+                `}
+            </td>
+        </tr>`;
+    }).join('');
 
     openModal('userMgmtModal');
 }
@@ -321,6 +335,28 @@ async function saveUserRole(uid) {
         alert('角色已更新');
     } catch (e) {
         alert('更新失敗：' + e.message);
+    }
+}
+
+async function disableUser(uid) {
+    if (!isOwner() || uid === OWNER_UID) return;
+    if (!confirm('確定要停用此帳號嗎？該用戶將立即無法登入。')) return;
+    try {
+        await db.collection('users').doc(uid).update({ disabled: true });
+        await openUserMgmt();
+    } catch (e) {
+        alert('操作失敗：' + e.message);
+    }
+}
+
+async function restoreUser(uid) {
+    if (!isOwner() || uid === OWNER_UID) return;
+    if (!confirm('確定要恢復此帳號嗎？')) return;
+    try {
+        await db.collection('users').doc(uid).update({ disabled: false });
+        await openUserMgmt();
+    } catch (e) {
+        alert('操作失敗：' + e.message);
     }
 }
 
