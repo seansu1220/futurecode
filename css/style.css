@@ -568,6 +568,122 @@ footer {
     margin-top: 8px;
 }
 
+/* ===== 驗證碼 ===== */
+.captcha-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+.captcha-text {
+    font-family: var(--font-code);
+    color: var(--color-cyan);
+    font-size: 1rem;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid var(--border-glow);
+    border-radius: 8px;
+    padding: 8px 14px;
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
+}
+.captcha-input {
+    flex: 1;
+    margin-top: 0 !important;
+}
+
+/* ===== Google 登入按鈕 ===== */
+.btn-google {
+    flex: 1;
+    background: #fff;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-google:hover { background: #f8f9fa; }
+
+/* ===== Modal 切換連結 ===== */
+.modal-switch {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.modal-switch a {
+    color: var(--color-cyan);
+    text-decoration: none;
+}
+.modal-switch a:hover { text-decoration: underline; }
+
+/* ===== 寬版 Modal（用戶管理）===== */
+.modal-wide {
+    max-width: 680px;
+    width: 95vw;
+}
+.table-wrap { overflow-x: auto; }
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+.user-table th,
+.user-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+.user-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.role-select {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.owner-tag {
+    color: var(--color-cyan);
+    font-size: 0.8rem;
+}
+
+/* ===== 導覽列用戶資訊 ===== */
+.user-info {
+    color: var(--color-cyan);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: rgba(0,212,255,0.08);
+    border-radius: 8px;
+    white-space: nowrap;
+}
+.btn-mgmt {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.btn-mgmt:hover {
+    border-color: var(--color-cyan);
+    color: var(--color-cyan);
+}
+
 /* ===== RWD ===== */
 @media (max-width: 900px) {
     .hero-content { flex-direction: column; text-align: center; }
