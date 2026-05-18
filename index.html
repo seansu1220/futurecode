@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未來程式設計 - AI 程式開發服務</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- 導覽列 -->
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="#" class="nav-brand">
+            <span class="brand-icon">⚡</span>
+            <span>未來程式設計</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#tools">免費工具</a>
+            <a href="#portfolio">作品集</a>
+            <a href="#about">關於我們</a>
+            <a href="https://shopee.tw/product/84156043/48060712536/" target="_blank" class="btn-shopee">🛒 蝦皮賣場</a>
+            <span id="userInfo" class="user-info hidden"></span>
+            <button id="accountSettingsBtn" class="btn-mgmt hidden">⚙️ 帳號設定</button>
+            <button id="userMgmtBtn" class="btn-mgmt hidden">👥 用戶管理</button>
+            <button id="loginBtn" class="btn-login">登入</button>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="開啟選單">☰</button>
+    </div>
+</nav>
+
+<!-- Hero 區域 -->
+<section id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-content">
+        <div class="hero-text">
+            <div class="hero-badge">🚀 Claude Code 驅動</div>
+            <h1>未來程式設計</h1>
+            <p class="hero-subtitle">你的想法，AI 幫你實現！</p>
+            <p class="hero-desc">專業程式開發代寫服務 · 快速 · 精準 · 高 CP 值</p>
+            <div class="hero-buttons">
+                <a href="https://shopee.tw/product/84156043/48060712536/" target="_blank" class="btn-primary">立即委託 →</a>
+                <a href="#tools" class="btn-secondary">查看免費工具</a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <div class="code-window">
+                <div class="code-titlebar">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="code-filename">future.js</span>
+                </div>
+                <div class="code-body">
+                    <p><span class="c-keyword">const</span> <span class="c-var">yourIdea</span> = <span class="c-string">"夢想中的功能"</span></p>
+                    <p><span class="c-keyword">const</span> <span class="c-var">result</span> = <span class="c-func">ClaudeCode</span></p>
+                    <p>&nbsp;&nbsp;.<span class="c-func">generate</span>(<span class="c-var">yourIdea</span>)</p>
+                    <p>&nbsp;&nbsp;.<span class="c-func">test</span>()</p>
+                    <p>&nbsp;&nbsp;.<span class="c-func">deliver</span>()</p>
+                    <p><span class="c-comment">// ✅ 完成！</span></p>
+                    <p class="blink-cursor">▋</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-hint">↓</div>
+</section>
+
+<!-- 免費工具區 -->
+<section id="tools">
+    <div class="section-container">
+        <div class="section-header">
+            <h2>🛠️ 免費小工具</h2>
+            <p>精心製作的實用工具，完全免費！</p>
+        </div>
+        <div id="adminToolBar" class="admin-bar hidden">
+            <button id="addToolBtn" class="btn-admin">＋ 新增工具</button>
+        </div>
+        <div id="toolsGrid" class="tools-grid">
+            <!-- 由 JS 渲染 -->
+        </div>
+        <div id="toolsEmpty" class="empty-state hidden">
+            <p>🔧 工具即將上線，敬請期待！</p>
+        </div>
+    </div>
+</section>
+
+<!-- 作品集區 -->
+<section id="portfolio">
+    <div class="section-container">
+        <div class="section-header">
+            <h2>📁 作品集</h2>
+            <p>我們已完成的各類程式專案</p>
+        </div>
+        <div id="adminPortfolioBar" class="admin-bar hidden">
+            <button id="addPortfolioBtn" class="btn-admin">＋ 新增作品</button>
+        </div>
+        <div id="portfolioGrid" class="portfolio-grid">
+            <!-- 由 JS 渲染 -->
+        </div>
+        <div id="portfolioEmpty" class="empty-state hidden">
+            <p>📂 作品陸續更新中，請至蝦皮查看案例！</p>
+        </div>
+    </div>
+</section>
+
+<!-- 賣場簡介 -->
+<section id="about">
+    <div class="section-container">
+        <h2>🚀 你的想法，AI 幫你實現！</h2>
+        <p class="about-lead">專業 Claude Code 程式生成服務</p>
+        <p class="about-desc">還在為了繁瑣的重複性工作頭痛嗎？想寫個小工具卻不知道從何開始？<br>
+        我們引進地表最強程式 AI — <strong>Claude Code</strong>，搭配人工調整與測試，為您提供最快速、最精準、高 CP 值的程式開發與代寫服務！</p>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="about-icon">⚡</div>
+                <h3>自動化與效率提升</h3>
+                <p>Excel / Google Sheet 自動化腳本、辦公室重複性工作外掛</p>
+            </div>
+            <div class="about-card">
+                <div class="about-icon">🕷️</div>
+                <h3>網路數據與爬蟲</h3>
+                <p>各大網站資料定時抓取、資料庫對接、數據分析</p>
+            </div>
+            <div class="about-card">
+                <div class="about-icon">🌐</div>
+                <h3>網頁與前端開發</h3>
+                <p>一頁式形象網站、前後端功能串接、HTML/CSS/JS 調整</p>
+            </div>
+            <div class="about-card">
+                <div class="about-icon">🤖</div>
+                <h3>社群機器人</h3>
+                <p>LINE Bot、Discord 機器人客製化功能開發</p>
+            </div>
+        </div>
+
+        <div class="why-us">
+            <h3>🎯 為什麼選擇我們？</h3>
+            <ul>
+                <li>✅ <strong>頂級 AI 技術加持：</strong>使用最新 Claude Code 技術，邏輯思維強大，架構完整</li>
+                <li>✅ <strong>量身打造，反應迅速：</strong>省去傳統開發的冗長溝通，在短時間內產出你要的成品</li>
+                <li>✅ <strong>交件速度極快：</strong>善用 AI 高效生產力，縮短傳統開發週期，急件首選</li>
+                <li>✅ <strong>價格公開透明：</strong>依據需求複雜度彈性報價，小工具不用花大錢</li>
+                <li>✅ <strong>測試過後才交付：</strong>所有產出皆經過基礎運行測試，確保符合約定功能</li>
+            </ul>
+        </div>
+
+        <div class="flow-steps">
+            <h3>📝 委託流程四步驟</h3>
+            <div class="steps-row">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h4>聊聊諮詢</h4>
+                    <p>說明需求與參考範例</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h4>評估報價</h4>
+                    <p>確認細節與交件時間</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h4>下單付款</h4>
+                    <p>蝦皮賣場下單</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <h4>交付測試</h4>
+                    <p>確認正常執行完成</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="notice">
+            ⚠️ 本服務核心部分採用 Claude AI 輔助生成，並經由人工測試優化。報價依需求難易度而定。
+        </div>
+    </div>
+</section>
+
+<!-- CTA 區 -->
+<section id="cta">
+    <div class="cta-container">
+        <h2>準備好開始了嗎？</h2>
+        <p>立即前往蝦皮賣場，開始你的第一個委託！</p>
+        <a href="https://shopee.tw/product/84156043/48060712536/" target="_blank" class="btn-primary btn-large">
+            🛒 前往蝦皮賣場委託
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <span>© 2025 未來程式設計</span>
+        <span>·</span>
+        <span>由 Claude Code 驅動</span>
+        <span>·</span>
+        <a href="https://shopee.tw/product/84156043/48060712536/" target="_blank">蝦皮賣場</a>
+    </div>
+</footer>
+
+<!-- 登入 Modal -->
+<div id="loginModal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h3>登入</h3>
+        <input type="text" id="loginUsername" class="modal-input" placeholder="帳號或信箱" autocomplete="username">
+        <input type="password" id="loginPassword" class="modal-input" placeholder="密碼" autocomplete="current-password">
+        <div class="captcha-row">
+            <span id="loginCaptchaText" class="captcha-text"></span>
+            <input type="number" id="loginCaptchaInput" class="modal-input captcha-input" placeholder="請輸入答案">
+        </div>
+        <div id="loginError" class="error-msg hidden"></div>
+        <div class="modal-buttons">
+            <button id="loginSubmit" class="btn-primary">登入</button>
+            <button id="loginGoogleBtn" class="btn-google">G&nbsp; Google 登入</button>
+            <button id="loginCancel" class="btn-secondary">取消</button>
+        </div>
+        <p class="modal-switch">還沒有帳號？<a href="#" id="toRegister">立即註冊</a></p>
+    </div>
+</div>
+
+<!-- 註冊 Modal -->
+<div id="registerModal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h3>註冊帳號</h3>
+        <input type="text" id="regUsername" class="modal-input" placeholder="帳號（用戶名稱）" autocomplete="username">
+        <input type="email" id="regEmail" class="modal-input" placeholder="信箱" autocomplete="email">
+        <input type="password" id="regPassword" class="modal-input" placeholder="密碼（8碼以上，含大小寫、數字、特殊符號）" autocomplete="new-password">
+        <input type="password" id="regConfirmPassword" class="modal-input" placeholder="確認密碼" autocomplete="new-password">
+        <div class="captcha-row">
+            <span id="regCaptchaText" class="captcha-text"></span>
+            <input type="number" id="regCaptchaInput" class="modal-input captcha-input" placeholder="請輸入答案">
+        </div>
+        <div id="regError" class="error-msg hidden"></div>
+        <div class="modal-buttons">
+            <button id="regSubmit" class="btn-primary">註冊</button>
+            <button id="regGoogleBtn" class="btn-google">G&nbsp; Google 註冊/登入</button>
+            <button id="regCancel" class="btn-secondary">取消</button>
+        </div>
+        <p class="modal-switch">已有帳號？<a href="#" id="toLogin">立即登入</a></p>
+    </div>
+</div>
+
+<!-- 用戶管理 Modal -->
+<div id="userMgmtModal" class="modal-overlay hidden">
+    <div class="modal-box modal-wide">
+        <h3>👥 用戶管理</h3>
+        <div class="table-wrap">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>帳號</th>
+                        <th>信箱</th>
+                        <th>角色</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="userMgmtList"></tbody>
+            </table>
+        </div>
+        <div class="modal-buttons" style="margin-top:1rem;">
+            <button onclick="closeModal('userMgmtModal')" class="btn-secondary">關閉</button>
+        </div>
+    </div>
+</div>
+
+<!-- 新增/編輯工具 Modal -->
+<div id="toolModal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h3 id="toolModalTitle">新增工具</h3>
+        <input type="hidden" id="toolId">
+        <label>圖示（Emoji）</label>
+        <input type="text" id="toolIcon" class="modal-input" placeholder="例如：🔧" maxlength="4">
+        <label>工具名稱</label>
+        <input type="text" id="toolName" class="modal-input" placeholder="工具名稱">
+        <label>工具描述</label>
+        <textarea id="toolDesc" class="modal-input" placeholder="簡短描述這個工具的功能" rows="2"></textarea>
+        <label>連結 URL（選填）</label>
+        <input type="url" id="toolUrl" class="modal-input" placeholder="https://...（可留空）">
+        <div class="modal-buttons">
+            <button id="toolSave" class="btn-primary">儲存</button>
+            <button id="toolCancel" class="btn-secondary">取消</button>
+        </div>
+    </div>
+</div>
+
+<!-- 新增/編輯作品 Modal -->
+<div id="portfolioModal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h3 id="portfolioModalTitle">新增作品</h3>
+        <input type="hidden" id="portfolioId">
+        <label>圖示（Emoji）</label>
+        <input type="text" id="portfolioIcon" class="modal-input" placeholder="例如：📊" maxlength="4">
+        <label>作品名稱</label>
+        <input type="text" id="portfolioName" class="modal-input" placeholder="作品名稱">
+        <label>作品描述</label>
+        <textarea id="portfolioDesc" class="modal-input" placeholder="說明這個作品的功能與成果" rows="3"></textarea>
+        <label>標籤（用逗號分隔）</label>
+        <input type="text" id="portfolioTags" class="modal-input" placeholder="例如：Python, 爬蟲, 自動化">
+        <label>連結 URL（選填）</label>
+        <input type="url" id="portfolioUrl" class="modal-input" placeholder="https://...（可留空）">
+        <div class="modal-buttons">
+            <button id="portfolioSave" class="btn-primary">儲存</button>
+            <button id="portfolioCancel" class="btn-secondary">取消</button>
+        </div>
+    </div>
+</div>
+
+<!-- 帳號設定 Modal -->
+<div id="accountModal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h3>⚙️ 帳號設定</h3>
+        <div id="providerList" style="margin:16px 0 8px;"></div>
+        <div id="linkGoogleArea">
+            <button onclick="linkWithGoogle()" class="btn-google" style="width:100%;margin-top:8px;">
+                G&nbsp; 連結 Google 帳號
+            </button>
+        </div>
+        <div id="alreadyLinked" class="hidden" style="color:var(--color-cyan);font-size:0.88rem;margin-top:8px;">
+            ✅ 已連結 Google 帳號，可直接用 Google 登入
+        </div>
+        <div id="accountMsg" class="hidden" style="font-size:0.88rem;margin-top:10px;"></div>
+        <div class="modal-buttons" style="margin-top:1.2rem;">
+            <button onclick="closeModal('accountModal')" class="btn-secondary">關閉</button>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="js/app.js?v=3"></script>
+</body>
+</html>

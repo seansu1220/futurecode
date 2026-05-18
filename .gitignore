@@ -1,0 +1,13 @@
+# 機密設定檔，不上傳
+.env
+.env.local
+
+# GitHub Desktop clone 的子資料夾（不是網站的一部分）
+futurecode/
+
+# 系統產生的檔案
+.DS_Store
+Thumbs.db
+
+# 編輯器設定
+.vscode/settings.json
