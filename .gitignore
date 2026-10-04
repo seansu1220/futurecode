@@ -11,3 +11,7 @@ Thumbs.db
 
 # 編輯器設定
 .vscode/settings.json
+
+# Python 快取
+__pycache__/
+*.pyc

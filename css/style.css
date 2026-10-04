@@ -814,6 +814,37 @@ details[open] .user-group-summary::before { transform: rotate(90deg); }
 }
 .showcase-card:hover .showcase-zoom { opacity: 1; transform: none; }
 
+.showcase-count {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(8, 12, 24, 0.82);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.showcase-minis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 8px 10px 0;
+}
+.showcase-mini {
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+}
+.showcase-mini img { width: 100%; display: block; aspect-ratio: 8 / 5; object-fit: cover; }
+.showcase-mini:hover,
+.showcase-mini:focus-visible { border-color: var(--color-cyan); transform: translateY(-2px); outline: none; }
+
 .showcase-body { padding: 18px 20px 20px; }
 .showcase-body h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 6px; }
 .showcase-body p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
@@ -851,12 +882,42 @@ details[open] .user-group-summary::before { transform: rotate(90deg); }
     box-shadow: var(--shadow);
 }
 .lightbox-media {
-    position: relative;
-    background: #000;
+    background: #05080f;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    min-width: 0;
 }
-.lightbox-media img { width: 100%; display: block; }
+.lightbox-stage { position: relative; }
+.lightbox-stage img { width: 100%; display: block; aspect-ratio: 8 / 5; object-fit: contain; }
+.lightbox-caption {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 10px 12px 4px;
+}
+.lightbox-thumbs {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px 14px;
+    overflow-x: auto;
+}
+.lightbox-thumb {
+    flex: 0 0 auto;
+    width: 96px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    background: none;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 0.2s, border-color 0.2s;
+}
+.lightbox-thumb img { width: 100%; display: block; aspect-ratio: 8 / 5; }
+.lightbox-thumb:hover { opacity: 0.9; }
+.lightbox-thumb.active { opacity: 1; border-color: var(--color-cyan); }
+.lightbox-item-nav { display: flex; gap: 8px; }
+.lightbox-item-nav .btn-secondary { flex: 1; padding: 8px 10px; font-size: 0.85rem; }
 .lightbox-nav {
     position: absolute;
     top: 50%;

@@ -1,5 +1,30 @@
 # 變更紀錄
 
+## 2026-10-04（下午）　作品展示擴充：每件 5 個畫面、新增架站平台與進階遊戲
+
+**問題描述**
+每件作品只有一張圖，業主看不出完整功能；缺少 Shopify、WooCommerce、WordPress 等常見架站平台作品；遊戲類只有休閒小遊戲，展現不出較複雜的開發能力。
+
+**根本原因**
+初版展示牆以「一件作品一張圖」設計，資料結構只有單一 `image` 欄位，燈箱也只能顯示單張圖片。
+
+**修改內容**
+- 圖片改為每件作品一個資料夾：`images/showcase/<作品代碼>/1~5.svg`，共 18 件、90 張（舊的單張圖已移除）。
+- 新增作品：
+  - 架站平台：Shopify 品牌電商、WooCommerce 茶行商店、WordPress 室內設計官網
+  - 遊戲設計：台灣 16 張麻將（多人連線）、集換式卡牌對戰、戰棋策略 RPG
+- 原有 12 件作品各補到 5 個畫面（例如電商加上商品列表、商品頁、購物車、會員中心；遊戲加上標題畫面、地圖、角色選擇、結算等）。
+- `tools/gen_showcase.py` 改為主程式，可指定只產生某件作品（`python tools/gen_showcase.py game-mahjong`）；繪圖程式拆分到 `tools/showcase/`：
+  - `common.py` 共用元件（按鈕、表格、圖表、手機外框、人物頭像等）
+  - `web_pages.py`、`platforms.py`、`automation_pages.py`、`bot_pages.py`、`games_casual_pages.py`、`games_advanced.py` 各類作品畫面
+  - `web.py`、`automation.py`、`bots.py`、`games_casual.py` 保留初版的封面畫面
+- `js/showcase-data.js`：資料結構由 `image` 改為 `screens: [{src, caption}]`，以 `buildScreens()` 依作品代碼產生路徑；新增「架站平台」分類。
+- `js/showcase.js`：卡片顯示封面＋4 張小縮圖與「5 個畫面」標示，點小縮圖可直接開到該畫面；燈箱支援切換畫面（← →）、切換作品（↑ ↓ 或按鈕）、縮圖列與畫面說明。
+- `index.html`：燈箱加入畫面說明、縮圖列、上一個／下一個作品按鈕；更新區塊副標與 JS／CSS 快取版本號。
+- `css/style.css`：新增卡片小縮圖、畫面數標籤、燈箱縮圖列等樣式。
+- 修正：LINE 對話示範圖中「10/05（日）」改為正確的「10/05（一）」。
+- `.gitignore`：加入 `__pycache__/`、`*.pyc`。
+
 ## 2026-10-04　新增「作品展示」圖片牆
 
 **問題描述**

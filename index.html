@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>未來程式設計 - AI 程式開發服務</title>
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -73,7 +73,7 @@
     <div class="section-container">
         <div class="section-header">
             <h2>🎨 作品展示</h2>
-            <p>網頁、程式自動化、聊天機器人到遊戲設計，你想得到的我們都能做</p>
+            <p>網頁、Shopify／WordPress 架站、程式自動化、聊天機器人到遊戲設計，每件作品都有 5 個畫面可以看</p>
         </div>
         <div id="showcaseFilters" class="showcase-filters" role="tablist" aria-label="作品分類"></div>
         <div id="showcaseGrid" class="showcase-grid">
@@ -352,9 +352,13 @@
     <div class="lightbox-box">
         <button id="lightboxClose" class="lightbox-close" aria-label="關閉">✕</button>
         <div class="lightbox-media">
-            <img id="lightboxImage" src="" alt="">
-            <button id="lightboxPrev" class="lightbox-nav prev" aria-label="上一個作品">‹</button>
-            <button id="lightboxNext" class="lightbox-nav next" aria-label="下一個作品">›</button>
+            <div class="lightbox-stage">
+                <img id="lightboxImage" src="" alt="">
+                <button id="lightboxPrev" class="lightbox-nav prev" aria-label="上一個畫面">‹</button>
+                <button id="lightboxNext" class="lightbox-nav next" aria-label="下一個畫面">›</button>
+            </div>
+            <p id="lightboxCaption" class="lightbox-caption"></p>
+            <div id="lightboxThumbs" class="lightbox-thumbs"></div>
         </div>
         <div class="lightbox-info">
             <div class="lightbox-meta">
@@ -365,14 +369,18 @@
             <p id="lightboxDesc"></p>
             <ul id="lightboxFeatures" class="lightbox-features"></ul>
             <div id="lightboxTags" class="tags"></div>
+            <div class="lightbox-item-nav">
+                <button id="lightboxPrevItem" class="btn-secondary">‹ 上一個作品</button>
+                <button id="lightboxNextItem" class="btn-secondary">下一個作品 ›</button>
+            </div>
             <a id="lightboxCta" href="#" target="_blank" rel="noopener" class="btn-primary lightbox-cta">💬 我也想做類似的 →</a>
         </div>
     </div>
 </div>
 
 <!-- 作品展示牆（不依賴 Firebase，先載入） -->
-<script src="js/showcase-data.js?v=1"></script>
-<script src="js/showcase.js?v=1"></script>
+<script src="js/showcase-data.js?v=2"></script>
+<script src="js/showcase.js?v=2"></script>
 
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
