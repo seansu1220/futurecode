@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>未來程式設計 - AI 程式開發服務</title>
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -19,7 +19,7 @@
         <div class="nav-links" id="navLinks">
             <a href="#showcase">作品展示</a>
             <a href="#tools">免費工具</a>
-            <a href="#portfolio">作品集</a>
+            <a href="#portfolio" id="navPortfolio" class="hidden">作品集</a>
             <a href="#about">關於我們</a>
             <a href="https://shopee.tw/product/84156043/48060712536/" target="_blank" class="btn-shopee">🛒 蝦皮賣場</a>
             <span id="userInfo" class="user-info hidden"></span>
@@ -73,11 +73,20 @@
     <div class="section-container">
         <div class="section-header">
             <h2>🎨 作品展示</h2>
-            <p>網頁、Shopify／WordPress 架站、程式自動化、聊天機器人到遊戲設計，每件作品都有 5 個畫面可以看</p>
+            <p>網頁、Shopify／WordPress 架站、程式自動化、聊天機器人到遊戲設計</p>
         </div>
-        <div id="showcaseFilters" class="showcase-filters" role="tablist" aria-label="作品分類"></div>
-        <div id="showcaseGrid" class="showcase-grid">
-            <!-- 由 js/showcase.js 渲染 -->
+        <div class="showcase-layout">
+            <aside class="showcase-sidebar">
+                <p class="showcase-sidebar-title">作品分類</p>
+                <div id="showcaseFilters" class="showcase-filters" role="tablist" aria-label="作品分類" aria-orientation="vertical"></div>
+                <div class="showcase-sidebar-cta">
+                    <p>找不到想要的類型？</p>
+                    <a href="https://shopee.tw/product/84156043/48060712536/" target="_blank" rel="noopener">聊聊你的需求 →</a>
+                </div>
+            </aside>
+            <div id="showcaseGrid" class="showcase-grid">
+                <!-- 由 js/showcase.js 渲染 -->
+            </div>
         </div>
         <p class="showcase-note">※ 以上為 Claude Code 協作開發的示範作品介面，用以展示可承接的專案類型；功能與風格皆可依需求客製。</p>
     </div>
@@ -102,8 +111,8 @@
     </div>
 </section>
 
-<!-- 作品集區 -->
-<section id="portfolio">
+<!-- 作品集區（暫時隱藏，由 js/app.js 的 SHOW_PORTFOLIO_SECTION 控制）-->
+<section id="portfolio" class="hidden">
     <div class="section-container">
         <div class="section-header">
             <h2>📁 作品集</h2>
@@ -389,6 +398,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="js/app.js?v=5"></script>
+<script src="js/app.js?v=6"></script>
 </body>
 </html>

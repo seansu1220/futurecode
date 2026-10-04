@@ -16,6 +16,10 @@ const EMAILJS_PUBLIC_KEY  = 'Xk0QIPsAgB5SDVz-Y';
 const EMAILJS_SERVICE_ID  = 'service_ggjqvjm';
 const EMAILJS_TEMPLATE_ID = 'template_bvgfxkh';
 
+// ===== 區塊顯示開關 =====
+// 作品集區（Firebase 動態作品）：目前尚無正式案例先隱藏，有作品後改為 true 即可恢復
+const SHOW_PORTFOLIO_SECTION = false;
+
 // ===== 初始資料（首次建立資料庫時使用）=====
 const SEED_TOOLS = [
     { icon: '📝', name: '字數計算器', desc: '快速計算文字的字數、字元數與段落數，寫作必備！', url: '' },
@@ -411,15 +415,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.emailjs && EMAILJS_PUBLIC_KEY) {
         emailjs.init(EMAILJS_PUBLIC_KEY);
     }
+    applySectionVisibility();
     bindEvents();
     // 資料載入由 onAuthStateChanged 觸發，不在此重複呼叫
 });
+
+// ===== 區塊顯示控制 =====
+function applySectionVisibility() {
+    document.getElementById('portfolio').classList.toggle('hidden', !SHOW_PORTFOLIO_SECTION);
+    document.getElementById('navPortfolio').classList.toggle('hidden', !SHOW_PORTFOLIO_SECTION);
+}
 
 // ===== 載入所有資料 =====
 async function loadAll() {
     showLoading(true);
     try {
-        await Promise.all([loadTools(), loadPortfolio()]);
+        await Promise.all([loadTools(), SHOW_PORTFOLIO_SECTION ? loadPortfolio() : null]);
     } catch (e) {
         console.error('載入資料失敗：', e);
         showError('資料庫連線失敗，請確認 Firebase 設定是否正確。');
