@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>未來程式設計 - AI 程式開發服務</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,6 +17,7 @@
             <span>未來程式設計</span>
         </a>
         <div class="nav-links" id="navLinks">
+            <a href="#showcase">作品展示</a>
             <a href="#tools">免費工具</a>
             <a href="#portfolio">作品集</a>
             <a href="#about">關於我們</a>
@@ -41,7 +42,7 @@
             <p class="hero-desc">專業程式開發代寫服務 · 快速 · 精準 · 高 CP 值</p>
             <div class="hero-buttons">
                 <a href="https://shopee.tw/product/84156043/48060712536/" target="_blank" class="btn-primary">立即委託 →</a>
-                <a href="#tools" class="btn-secondary">查看免費工具</a>
+                <a href="#showcase" class="btn-secondary">看看作品</a>
             </div>
         </div>
         <div class="hero-card">
@@ -65,6 +66,21 @@
         </div>
     </div>
     <div class="scroll-hint">↓</div>
+</section>
+
+<!-- 作品展示牆 -->
+<section id="showcase">
+    <div class="section-container">
+        <div class="section-header">
+            <h2>🎨 作品展示</h2>
+            <p>網頁、程式自動化、聊天機器人到遊戲設計，你想得到的我們都能做</p>
+        </div>
+        <div id="showcaseFilters" class="showcase-filters" role="tablist" aria-label="作品分類"></div>
+        <div id="showcaseGrid" class="showcase-grid">
+            <!-- 由 js/showcase.js 渲染 -->
+        </div>
+        <p class="showcase-note">※ 以上為 Claude Code 協作開發的示範作品介面，用以展示可承接的專案類型；功能與風格皆可依需求客製。</p>
+    </div>
 </section>
 
 <!-- 免費工具區 -->
@@ -330,6 +346,33 @@
         </div>
     </div>
 </div>
+
+<!-- 作品展示燈箱 -->
+<div id="showcaseLightbox" class="showcase-lightbox hidden" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+    <div class="lightbox-box">
+        <button id="lightboxClose" class="lightbox-close" aria-label="關閉">✕</button>
+        <div class="lightbox-media">
+            <img id="lightboxImage" src="" alt="">
+            <button id="lightboxPrev" class="lightbox-nav prev" aria-label="上一個作品">‹</button>
+            <button id="lightboxNext" class="lightbox-nav next" aria-label="下一個作品">›</button>
+        </div>
+        <div class="lightbox-info">
+            <div class="lightbox-meta">
+                <span id="lightboxCategory" class="showcase-badge static"></span>
+                <span id="lightboxCounter" class="lightbox-counter"></span>
+            </div>
+            <h3 id="lightboxTitle"></h3>
+            <p id="lightboxDesc"></p>
+            <ul id="lightboxFeatures" class="lightbox-features"></ul>
+            <div id="lightboxTags" class="tags"></div>
+            <a id="lightboxCta" href="#" target="_blank" rel="noopener" class="btn-primary lightbox-cta">💬 我也想做類似的 →</a>
+        </div>
+    </div>
+</div>
+
+<!-- 作品展示牆（不依賴 Firebase，先載入） -->
+<script src="js/showcase-data.js?v=1"></script>
+<script src="js/showcase.js?v=1"></script>
 
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
