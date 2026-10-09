@@ -26,16 +26,18 @@ const SHOWCASE_CTA_URL = 'https://shopee.tw/product/84156043/48060712536/';
  * @property {string[]}         features    功能重點
  * @property {string[]}         tags        技術標籤
  * @property {ShowcaseScreen[]} screens     作品畫面（第一張為封面）
+ * @property {boolean}          [isReal]    true＝實際運行中的作品（顯示「實際作品」標章），未填＝示範作品
  */
 
 /**
  * 依作品代碼與畫面說明產生畫面清單（純函式）
  * @param {string} id
  * @param {string[]} captions
+ * @param {string} [ext='svg'] 圖片副檔名（示範作品為 svg，實際截圖為 png）
  * @returns {ShowcaseScreen[]}
  */
-function buildScreens(id, captions) {
-    return captions.map((caption, index) => ({ src: `images/showcase/${id}/${index + 1}.svg`, caption }));
+function buildScreens(id, captions, ext = 'svg') {
+    return captions.map((caption, index) => ({ src: `images/showcase/${id}/${index + 1}.${ext}`, caption }));
 }
 
 /** @type {ShowcaseCategory[]} */
@@ -50,6 +52,25 @@ const SHOWCASE_CATEGORIES = [
 
 /** @type {ShowcaseItem[]} */
 const SHOWCASE_ITEMS = [
+    // ---------- 實際作品（排最前面）----------
+    {
+        id: 'real-trading', category: 'automation', isReal: true,
+        title: '台指期＆BTC 程式交易系統',
+        summary: '實際運行中：永豐台指期、幣安 BTC 自動下單、跟單與 LINE 推播。',
+        description: '我自己開發並每天實際使用的交易系統（非示範畫面），整合永豐 Shioaji 與幣安 API，涵蓋行情處理、策略訊號、自動下單、部位對帳、風險控管與 LINE 即時推播。自 2026 年 5 月起持續改版，約 5 萬行 Python、近 470 次版本紀錄。截圖中的帳號、持倉與策略參數已做遮蔽。本作品展示的是系統開發能力，不提供投資建議或代客操作。',
+        features: [
+            '永豐 Shioaji API 連線，帳戶與持倉即時查詢',
+            '五支策略組合實盤，決策邏輯與回測同源',
+            'BTC 幣安永續合約 24 小時自動交易與多層風控',
+            '跟單引擎：每秒同步另一帳號部位，異常即停機並 LINE 通知',
+            '歷史回測與 Walk-Forward 樣本外驗證',
+            '每日財經新聞 AI 分析（Claude／Gemini／Groq）',
+            '紀錄與通知自動遮蔽 token、身分證等敏感資料',
+        ],
+        tags: ['Python', 'Shioaji API', 'Binance API', 'LINE Bot', 'pandas'],
+        screens: buildScreens('real-trading', ['實盤連線與帳戶監控', '多策略組合實盤', 'BTC 24 小時自動交易', '跟單引擎', '策略回測與參數設定', '每日財經新聞 AI 分析'], 'png'),
+    },
+
     // ---------- 網頁設計 ----------
     {
         id: 'web-cafe', category: 'web',
@@ -127,15 +148,7 @@ const SHOWCASE_ITEMS = [
         tags: ['Python', '爬蟲', 'Google Sheet', 'LINE Notify'],
         screens: buildScreens('auto-crawler', ['爬蟲執行與比價結果', '設定檔', 'Google 試算表紀錄', 'LINE 降價通知', '價格追蹤儀表板']),
     },
-    {
-        id: 'auto-trading', category: 'automation',
-        title: '量化交易策略回測系統',
-        summary: '回測、參數最佳化、即時監控，用數據驗證交易想法。',
-        description: '把交易想法寫成程式，用歷史資料回測並最佳化參數，輸出專業績效指標，也能接上即時行情監控與訊號通知。',
-        features: ['歷史資料回測與 K 線買賣點', '參數最佳化熱力圖', '交易明細與報酬分布', '即時監控與訊號推播', '策略參數圖形化設定'],
-        tags: ['Python', 'pandas', '數據分析', '視覺化'],
-        screens: buildScreens('auto-trading', ['回測報告', '參數最佳化熱力圖', '交易明細與報酬分布', '即時監控', '策略設定與程式碼']),
-    },
+    // 示範版「量化交易策略回測系統」(auto-trading) 已由上方實際作品取代；圖片與產生器保留，需要時加回此處即可
     {
         id: 'app-inventory', category: 'automation',
         title: '桌面版庫存管理系統',

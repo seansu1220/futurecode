@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>未來程式設計 - AI 程式開發服務</title>
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=5">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -88,7 +88,7 @@
                 <!-- 由 js/showcase.js 渲染 -->
             </div>
         </div>
-        <p class="showcase-note">※ 以上為 Claude Code 協作開發的示範作品介面，用以展示可承接的專案類型；功能與風格皆可依需求客製。</p>
+        <p class="showcase-note">※ 標示「✔ 實際作品」者為實際運行中的系統（截圖已遮蔽個人與帳戶資訊）；其餘為 Claude Code 協作開發的示範作品介面，用以展示可承接的專案類型，功能與風格皆可依需求客製。</p>
     </div>
 </section>
 
@@ -372,6 +372,7 @@
         <div class="lightbox-info">
             <div class="lightbox-meta">
                 <span id="lightboxCategory" class="showcase-badge static"></span>
+                <span id="lightboxReal" class="showcase-real static hidden">✔ 實際作品</span>
                 <span id="lightboxCounter" class="lightbox-counter"></span>
             </div>
             <h3 id="lightboxTitle"></h3>
@@ -388,8 +389,8 @@
 </div>
 
 <!-- 作品展示牆（不依賴 Firebase，先載入） -->
-<script src="js/showcase-data.js?v=2"></script>
-<script src="js/showcase.js?v=2"></script>
+<script src="js/showcase-data.js?v=3"></script>
+<script src="js/showcase.js?v=3"></script>
 
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>

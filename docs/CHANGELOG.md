@@ -1,5 +1,24 @@
 # 變更紀錄
 
+## 2026-10-09　作品展示新增實際作品「台指期＆BTC 程式交易系統」
+
+**問題描述**
+作品展示牆全部都是示範作品，缺少真實案例；使用者實際開發並運行中的交易系統（Line_Chat_Test 專案）沒有放上網站。
+
+**根本原因**
+初版展示牆只為示範作品設計：圖片路徑固定為 `.svg`、資料結構沒有區分示範與實際作品，底部說明也寫死「以上為示範作品」。
+
+**修改內容**
+- `images/showcase/real-trading/1~6.png`：交易系統 GUI 實際截圖，合成為 1600×1000 展示圖。因為會公開在網路上，以下內容皆已模糊處理：帳號、姓名、登入環境、持倉與損益、實單／live 模式標示、五支策略名稱與規則說明、BTC 策略參數、跟單帳號與設定、回測策略標題與績效。
+- `js/showcase-data.js`：
+  - `buildScreens()` 新增第三個參數 `ext`（預設 `svg`），實際截圖用 `png`。
+  - `ShowcaseItem` 新增選填欄位 `isReal`，`true` 時顯示「實際作品」標章。
+  - 新增作品 `real-trading`（分類：程式與自動化），排在全部作品最前面。
+  - 移除示範作品 `auto-trading`（量化交易策略回測系統），由實際作品取代；圖片與 `tools/showcase/automation_pages.py` 產生器保留，需要時可加回。
+- `js/showcase.js`：卡片封面左下角與燈箱標題區顯示「✔ 實際作品」標章。
+- `index.html`：燈箱新增 `#lightboxReal` 標章；底部說明改為區分實際作品與示範作品；CSS `v=5`、showcase-data.js 與 showcase.js `v=3`。
+- `css/style.css`：新增 `.showcase-real` 綠色標章樣式。
+
 ## 2026-10-09　新增本機匯出資料夾 exports/（不上傳 GitHub）
 
 **問題描述**
