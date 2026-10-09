@@ -26,7 +26,6 @@ const SHOWCASE_CTA_URL = 'https://shopee.tw/product/84156043/48060712536/';
  * @property {string[]}         features    功能重點
  * @property {string[]}         tags        技術標籤
  * @property {ShowcaseScreen[]} screens     作品畫面（第一張為封面）
- * @property {boolean}          [isReal]    true＝實際運行中的作品（顯示「實際作品」標章），未填＝示範作品
  */
 
 /**
@@ -52,12 +51,12 @@ const SHOWCASE_CATEGORIES = [
 
 /** @type {ShowcaseItem[]} */
 const SHOWCASE_ITEMS = [
-    // ---------- 實際作品（排最前面）----------
+    // ---------- 台指期＆BTC 交易系統（排最前面）----------
     {
-        id: 'real-trading', category: 'automation', isReal: true,
+        id: 'real-trading', category: 'automation',
         title: '台指期＆BTC 程式交易系統',
         summary: '實際運行中：永豐台指期、幣安 BTC 自動下單、跟單與 LINE 推播。',
-        description: '我自己開發並每天實際使用的交易系統（非示範畫面），整合永豐 Shioaji 與幣安 API，涵蓋行情處理、策略訊號、自動下單、部位對帳、風險控管與 LINE 即時推播。自 2026 年 5 月起持續改版，約 5 萬行 Python、近 470 次版本紀錄。截圖中的帳號、持倉與策略參數已做遮蔽。本作品展示的是系統開發能力，不提供投資建議或代客操作。',
+        description: '我自己開發並每天實際使用的交易系統，整合永豐 Shioaji 與幣安 API，涵蓋行情處理、策略訊號、自動下單、部位對帳、風險控管與 LINE 即時推播。自 2026 年 5 月起持續改版，約 5 萬行 Python、近 470 次版本紀錄。截圖中的帳號、持倉與策略參數已做遮蔽。本作品展示的是系統開發能力，不提供投資建議或代客操作。',
         features: [
             '永豐 Shioaji API 連線，帳戶與持倉即時查詢',
             '五支策略組合實盤，決策邏輯與回測同源',
@@ -148,7 +147,7 @@ const SHOWCASE_ITEMS = [
         tags: ['Python', '爬蟲', 'Google Sheet', 'LINE Notify'],
         screens: buildScreens('auto-crawler', ['爬蟲執行與比價結果', '設定檔', 'Google 試算表紀錄', 'LINE 降價通知', '價格追蹤儀表板']),
     },
-    // 示範版「量化交易策略回測系統」(auto-trading) 已由上方實際作品取代；圖片與產生器保留，需要時加回此處即可
+    // 示範版「量化交易策略回測系統」(auto-trading) 已由上方台指期＆BTC 交易系統取代；圖片與產生器保留，需要時加回此處即可
     {
         id: 'app-inventory', category: 'automation',
         title: '桌面版庫存管理系統',

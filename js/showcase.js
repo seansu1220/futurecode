@@ -49,7 +49,6 @@
                 <div class="showcase-thumb">
                     <img src="${escapeText(cover.src)}" alt="${escapeText(item.title)}：${escapeText(cover.caption)}" loading="lazy" width="800" height="500">
                     <span class="showcase-badge">${escapeText(categoryLabel(item.category))}</span>
-                    ${item.isReal ? '<span class="showcase-real">✔ 實際作品</span>' : ''}
                     <span class="showcase-count">▦ ${item.screens.length} 個畫面</span>
                     <span class="showcase-zoom">點擊放大 ⤢</span>
                 </div>
@@ -84,7 +83,6 @@
     function renderLightboxItem() {
         const item = visibleItems[itemIndex];
         document.getElementById('lightboxCategory').textContent = categoryLabel(item.category);
-        document.getElementById('lightboxReal').classList.toggle('hidden', !item.isReal);
         document.getElementById('lightboxCounter').textContent = `作品 ${itemIndex + 1} / ${visibleItems.length}`;
         document.getElementById('lightboxTitle').textContent = item.title;
         document.getElementById('lightboxDesc').textContent = item.description;
