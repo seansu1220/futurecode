@@ -15,3 +15,6 @@ Thumbs.db
 # Python 快取
 __pycache__/
 *.pyc
+
+# 本機匯出檔（例如接案平台用的作品圖），不上傳
+exports/
